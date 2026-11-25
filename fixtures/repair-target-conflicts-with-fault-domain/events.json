@@ -1,0 +1,224 @@
+{
+  "policy": {
+    "domains": {
+      "A": "west",
+      "B": "east",
+      "C": "south",
+      "D": "east",
+      "E": "hill",
+      "F": "ridge"
+    },
+    "capacity": {
+      "A": 48,
+      "B": 48,
+      "C": 48,
+      "D": 24,
+      "E": 16,
+      "F": 16
+    },
+    "stripes": [
+      {
+        "version": "v1",
+        "id": "s1",
+        "offset": 0,
+        "length": 16,
+        "d0": [
+          "A",
+          "one.bin",
+          "1635c8525afbae58c37bede3c9440844e9143727cc7c160bed665ec378d8a262"
+        ],
+        "d1": [
+          "B",
+          "two.bin",
+          "d400b95dd9e1fb23ef1fb37be3640470c1bcf8304eb5befbd339b124b27db72e"
+        ],
+        "p": [
+          "C",
+          "parity.bin",
+          "35138d79fb2fbf3b5d841662e6b9c5c5ac4e4dc3b1a8192f194daa8110c14afa"
+        ]
+      },
+      {
+        "version": "v1",
+        "id": "s2",
+        "offset": 16,
+        "length": 16,
+        "d0": [
+          "A",
+          "three.bin",
+          "da58590f2f2a2ba4718c7d25b0adcae9076b9fd30adc2d93e629ea312c1f5d16"
+        ],
+        "d1": [
+          "B",
+          "four.bin",
+          "21dc9b85e2f3e558907935a5bf78506e6785bdc8219c1e341fc89635a891a2df"
+        ],
+        "p": [
+          "C",
+          "parity2.bin",
+          "5d29966353b1a82cda07f13890ba3fe32a6041f27c054ce7b95afc362b37b1a9"
+        ]
+      }
+    ]
+  },
+  "objects": {
+    "one.bin": {
+      "bytes": 8,
+      "sha256": "1635c8525afbae58c37bede3c9440844e9143727cc7c160bed665ec378d8a262"
+    },
+    "two.bin": {
+      "bytes": 8,
+      "sha256": "d400b95dd9e1fb23ef1fb37be3640470c1bcf8304eb5befbd339b124b27db72e"
+    },
+    "parity.bin": {
+      "bytes": 8,
+      "sha256": "35138d79fb2fbf3b5d841662e6b9c5c5ac4e4dc3b1a8192f194daa8110c14afa"
+    },
+    "three.bin": {
+      "bytes": 8,
+      "sha256": "da58590f2f2a2ba4718c7d25b0adcae9076b9fd30adc2d93e629ea312c1f5d16"
+    },
+    "four.bin": {
+      "bytes": 8,
+      "sha256": "21dc9b85e2f3e558907935a5bf78506e6785bdc8219c1e341fc89635a891a2df"
+    },
+    "parity2.bin": {
+      "bytes": 8,
+      "sha256": "5d29966353b1a82cda07f13890ba3fe32a6041f27c054ce7b95afc362b37b1a9"
+    },
+    "corrupt.bin": {
+      "bytes": 8,
+      "sha256": "2ebc80c2c1db7aa51dbcd8934922ea09eb353521dae0c1cf61a510043606c231"
+    },
+    "new.bin": {
+      "bytes": 8,
+      "sha256": "f41ec9f928f772f05f1ea593444c642cebde6e36360bafc94c07f6a029ac938b"
+    }
+  },
+  "events": [
+    {
+      "at": 0,
+      "action": "open_read",
+      "handle": "h1",
+      "version": "v1"
+    },
+    {
+      "at": 2,
+      "action": "offline",
+      "device": "A"
+    },
+    {
+      "at": 3,
+      "action": "read",
+      "handle": "h1",
+      "offset": 4,
+      "length": 26
+    },
+    {
+      "at": 4,
+      "action": "repair",
+      "version": "v1",
+      "stripe": "s1",
+      "fragment": "d0",
+      "target": "D",
+      "attempt": "d1"
+    },
+    {
+      "at": 5,
+      "action": "repair",
+      "version": "v1",
+      "stripe": "s1",
+      "fragment": "d0",
+      "target": "E",
+      "attempt": "e1"
+    },
+    {
+      "at": 6,
+      "action": "corrupt",
+      "device": "C",
+      "stripe": "s2",
+      "fragment": "p",
+      "file": "corrupt.bin"
+    },
+    {
+      "at": 7,
+      "action": "read",
+      "handle": "h1",
+      "offset": 4,
+      "length": 26
+    },
+    {
+      "at": 8,
+      "action": "repair_receipt",
+      "device": "E",
+      "attempt": "e1",
+      "generation": 2,
+      "file": "one.bin"
+    },
+    {
+      "at": 9,
+      "action": "repair_receipt",
+      "device": "D",
+      "attempt": "d1",
+      "generation": 1,
+      "file": "one.bin"
+    },
+    {
+      "at": 10,
+      "action": "publish",
+      "version": "v2",
+      "file": "new.bin"
+    },
+    {
+      "at": 12,
+      "action": "close",
+      "handle": "h1"
+    }
+  ],
+  "packets": [
+    {
+      "method": "GET",
+      "path": "/media/A/fragments/s1-d0",
+      "status": 503,
+      "reply": {
+        "state": "offline"
+      },
+      "body": null,
+      "drop": false,
+      "lag_ms": 0
+    },
+    {
+      "method": "GET",
+      "path": "/media/B/fragments/s1-d1",
+      "status": 200,
+      "reply": {
+        "file": "two.bin"
+      },
+      "body": null,
+      "drop": false,
+      "lag_ms": 0
+    },
+    {
+      "method": "GET",
+      "path": "/media/C/fragments/s1-p",
+      "status": 200,
+      "reply": {
+        "file": "parity.bin"
+      },
+      "body": null,
+      "drop": false,
+      "lag_ms": 0
+    },
+    {
+      "method": "GET",
+      "path": "/media/C/fragments/s2-p",
+      "status": 200,
+      "reply": {
+        "file": "corrupt.bin"
+      },
+      "body": null,
+      "drop": false,
+      "lag_ms": 0
+    }
+  ]
+}

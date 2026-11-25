@@ -1,0 +1,72 @@
+{
+  "policy": {
+    "domains": {
+      "A": "one",
+      "B": "two",
+      "C": "three"
+    },
+    "capacity": {
+      "A": 16,
+      "B": 16,
+      "C": 16
+    },
+    "stripes": [
+      {
+        "version": "v3",
+        "id": "k",
+        "offset": 0,
+        "length": 8,
+        "d0": [
+          "A",
+          "left.bin",
+          "da2c575e48ee7651b9e99a511216b827ef6dea7ca08e77c7055b18b9d918a842"
+        ],
+        "d1": [
+          "B",
+          "right.bin",
+          "5f829f9e9b41706a703e4b4d3b89c31f34acaf80ffbe3ed4ac1431c4527800f2"
+        ],
+        "p": [
+          "C",
+          "parity.bin",
+          "dc1933eba065978eaed12f6bcbb38d4d78fff494483a60175608b1b8d9039b2d"
+        ]
+      }
+    ]
+  },
+  "objects": {
+    "left.bin": {
+      "bytes": 4,
+      "sha256": "da2c575e48ee7651b9e99a511216b827ef6dea7ca08e77c7055b18b9d918a842"
+    },
+    "right.bin": {
+      "bytes": 4,
+      "sha256": "5f829f9e9b41706a703e4b4d3b89c31f34acaf80ffbe3ed4ac1431c4527800f2"
+    },
+    "parity.bin": {
+      "bytes": 4,
+      "sha256": "dc1933eba065978eaed12f6bcbb38d4d78fff494483a60175608b1b8d9039b2d"
+    }
+  },
+  "events": [
+    {
+      "at": 0,
+      "action": "open_read",
+      "handle": "k0",
+      "version": "v3"
+    },
+    {
+      "at": 1,
+      "action": "read",
+      "handle": "k0",
+      "offset": 2,
+      "length": 4
+    },
+    {
+      "at": 2,
+      "action": "close",
+      "handle": "k0"
+    }
+  ],
+  "packets": []
+}
